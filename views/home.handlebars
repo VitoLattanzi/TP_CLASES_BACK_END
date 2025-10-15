@@ -1,0 +1,14 @@
+<h1>soy el home</h1>
+<h2> vos sos {{username}}</h2>
+{{#if id_admin}}
+    <h3>usted es admin</h3>
+{{else}}
+    <h3>usted no es adm</h3>
+{{/if}}
+{{#each workspaces}}
+    <div> 
+        <h3>{{this.name}}</h3>
+        <a href="">ir a este workspaces</a>
+        <hr>
+    </div>
+{{/each}}
