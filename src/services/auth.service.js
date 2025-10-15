@@ -37,8 +37,9 @@ class AuthService {
             to: email,
             subject: 'Verifica tu cuenta de mail',
             html: `
-                <h1>Verifica tu cuenta de mail</h1>
-                <a href="${ENVIRONMENT.URL_BACKEND}/api/auth/verify-email/${verification_token}">Verificar</a>
+                <h1>correo de verificacion de cuenta</h1>
+                <a href="${ENVIRONMENT.URL_BACKEND}/api/auth/verify-email/${verification_token}">haga click aqui para verificar</a>
+                <p>Si no creaste esta cuenta, puedes ignorar este mail</p>
             `
         })
 
