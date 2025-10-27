@@ -75,7 +75,6 @@ class MemberWorkspaceRepository {
            }
         )
         return members_list_formatted
-        return members
     }
 
     
