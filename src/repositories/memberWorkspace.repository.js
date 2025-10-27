@@ -62,7 +62,7 @@ class MemberWorkspaceRepository {
     
        //darle un formato a la respuesta xq los devueñve todo desordenado 
         const members_list_formatted =  members.map(
-           (member)=>{
+           (member) => { 
                 return {
                     workspace_id: member.id_workspace._id,
                     workspace_name: member.id_workspace.name,
