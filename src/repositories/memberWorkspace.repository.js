@@ -58,21 +58,22 @@ class MemberWorkspaceRepository {
     }
 
     static async getAllByUserId(user_id){
-        const members = MemberWorkspace.find({id_user: user_id}).populate("id_workspace")
-    
-       //darle un formato a la respuesta xq los devueñve todo desordenado 
-        const members_list_formatted =  members.map(
-           (member) => { 
+        //.populate nos permite expandir los datos de una referencia
+        const members = await MemberWorkspace.find({id_user: user_id}).populate('id_workspace')
+
+        /* Dar formato a la respuesta, ya que mongoose nos da los datos pero desordenados */
+        const members_list_formatted = members.map(
+            (member) => {
                 return {
                     workspace_id: member.id_workspace._id,
                     workspace_name: member.id_workspace.name,
                     workspace_created_at: member.id_workspace.created_at,
-                    workspace_url_img: member.id_workspace.url_img,
+                    workspace_url_image: member.id_workspace.url_image,
                     member_id: member._id,
                     member_user_id: member.id_user,
                     member_role: member.role
                 }
-           }
+            }
         )
         return members_list_formatted
     }
