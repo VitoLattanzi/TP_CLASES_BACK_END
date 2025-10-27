@@ -56,6 +56,15 @@ class MemberWorkspaceRepository {
             }
         }
     }
+
+    static async getAllVyUserId(user_id){
+        const members = MemberWorkspace.find({id_user: user_id})
+    
+        return members
+    }
+
+    
 }
+
 
 export default MemberWorkspaceRepository

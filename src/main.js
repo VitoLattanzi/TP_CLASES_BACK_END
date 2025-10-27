@@ -3,16 +3,16 @@ import connectToMongoDB from "./config/configMongoDB.config.js";
 import express from 'express'
 import authRouter from "./routes/auth.router.js";
 import workspaceRouter from "./routes/workspace.router.js";
-import randomMiddleware from "./middlewares/random.middleware.js";
-import mailTransporter from "./config/mailTransporter.config.js";
 import cors from 'cors'
+
 
 connectToMongoDB()
 
 const app = express()
 
-//se configura como api publica, para q cualquier dominio pued a hacer consutlas
-app.use(cors())
+//Configuro a mi API como API publica, cualquier dominio puede hacer peticiones
+app.use( cors() )
+
 
 app.use(express.json())
 
@@ -24,7 +24,7 @@ app.use('/api/workspace', workspaceRouter)
 /* mailTransporter.sendMail(
     {
         from: ENVIRONMENT.GMAIL_USER, //Desde quien
-        to:  'vitofrancolattanzi@gmail.com', //Hacia adonde enviar
+        to:  'mati.dev.gimenez@gmail.com', //Hacia adonde enviar
         subject: 'Mail de prueba', //asunto
         html: `<h1>Hola desde node js</h1>` //Body del mail
     }

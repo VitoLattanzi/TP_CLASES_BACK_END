@@ -29,7 +29,7 @@ class AuthService {
             {
                 user_id: user_id_created
             },
-            'Tu43PtuCjvykGuBttnSKiJeypvsSQVvKG6BJ3FlMlSGsDz6Cf0bu5Cu395/yUQmC'
+            ENVIRONMENT.JWT_SECRET
         )
 
         await mailTransporter.sendMail({
@@ -37,9 +37,8 @@ class AuthService {
             to: email,
             subject: 'Verifica tu cuenta de mail',
             html: `
-                <h1>correo de verificacion de cuenta</h1>
-                <a href="${ENVIRONMENT.URL_BACKEND}/api/auth/verify-email/${verification_token}">haga click aqui para verificar</a>
-                <p>Si no creaste esta cuenta, puedes ignorar este mail</p>
+                <h1>Verifica tu cuenta de mail</h1>
+                <a href="${ENVIRONMENT.URL_BACKEND}/api/auth/verify-email/${verification_token}">Verificar</a>
             `
         })
 
@@ -79,7 +78,8 @@ class AuthService {
             throw error
         }
     }
-     static async login (email, password){
+
+    static async login (email, password){
         /* 
         -Buscar al usuario por email
         -Validar que exista
@@ -108,9 +108,12 @@ class AuthService {
             {
                 name: user_found.name,
                 email: user_found.email,
-                id: user_found.id,
+                id: user_found._id,
             },
-            ENVIRONMENT.JWT_SECRET
+            ENVIRONMENT.JWT_SECRET,
+            {
+                expiresIn: '24h'
+            }
         )
 
         return {
@@ -120,3 +123,23 @@ class AuthService {
 }
 
 export default AuthService
+
+/* 
+AUTOMATIZACION DE GENERADOR DE CLAVES PARA JWT
+
+Creo esta tabla o coleccion
+- type: "AUTH" | "PRODUCTS" | "SESSIONS"
+- id : INT | STRING
+- secret : STRING
+- expire_in : DATE
+- created_at: DATE
+- active: boolean
+
+PARA CREAR: 
+    Cada vez que creemos el token usamos el ultimo registro de la tabla
+    Si el registro esta expirado crear uno nuevo
+    y guardamos en el token el secret_id (el id de esa clave)
+
+PARA USAR/VERIFICAR: 
+    Vas a tomar el secret_id y vas a buscar el la DB si existe un secreto con ese secret_id, en caso de existir vas a verificar el token con ese secret
+*/
