@@ -65,9 +65,9 @@ class MemberWorkspaceRepository {
            (member)=>{
                 return {
                     workspace_id: member.id_workspace._id,
-                    worksoace_name: member.id_workspace.name,
-                    worksoace_created_at: member.id_workspace.created_at,
-                    worksoace_url_img: member.id_workspace.url_img,
+                    workspace_name: member.id_workspace.name,
+                    workspace_created_at: member.id_workspace.created_at,
+                    workspace_url_img: member.id_workspace.url_img,
                     member_id: member._id,
                     member_user_id: member.id_user,
                     member_role: member.role
