@@ -11,13 +11,13 @@ class WorkspaceService {
 
         console.log(user_id, name, url_img)
 
-       /*  //crear el espacio de trabajo
+        //crear el espacio de trabajo
         const workspace_created = await WorkspaceRepository.create(name, url_img)
 
         //crear al miembro adm (creadorr)
-        await MemberWorkspaceRepository.create(user_id, workspace_created._id, "admin") */
+        await MemberWorkspaceRepository.create(user_id, workspace_created._id, "admin")
     
-        return /* workspace_created */ true
+        return workspace_created 
     }
 }
 
