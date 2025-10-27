@@ -5,7 +5,7 @@ class MemberWorkspaceRepository {
         try {
             await MemberWorkspace.insertOne({
                 id_user: user_id,
-                workspace_id: workspace_id,
+                id_workspace : workspace_id,
                 role: role
             })
         }
