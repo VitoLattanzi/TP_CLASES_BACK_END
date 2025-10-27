@@ -57,7 +57,7 @@ class MemberWorkspaceRepository {
         }
     }
 
-    static async getAllVyUserId(user_id){
+    static async getAllByUserId(user_id){
         const members = MemberWorkspace.find({id_user: user_id}).populate("id_workspace")
     
         return members
