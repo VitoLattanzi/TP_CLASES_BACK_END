@@ -5,7 +5,7 @@ import authMiddleware from '../middlewares/authMiddleware.js'
 
 const workspaceRouter = express.Router()
 
-
+const router = express.Router();
 /* workspaceRouter.get(
     '/all',
     WorkspaceController.getAll

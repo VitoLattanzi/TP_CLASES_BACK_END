@@ -4,7 +4,7 @@ class MemberWorkspaceRepository {
     static async create(user_id, workspace_id, role) {
         try {
             await MemberWorkspace.insertOne({
-                user_id: user_id,
+                id_user: user_id,
                 workspace_id: workspace_id,
                 role: role
             })
