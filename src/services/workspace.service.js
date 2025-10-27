@@ -15,7 +15,7 @@ class WorkspaceService {
         const workspace_created = await WorkspaceRepository.create(name, url_img)
 
         //crear al miembro adm (creadorr)
-        await MemberWorkspaceRepository.create(user_id, workspace_created._id, "admin")
+        /* await MemberWorkspaceRepository.create(user_id, workspace_created._id, "admin") */
     
         return workspace_created 
     }
