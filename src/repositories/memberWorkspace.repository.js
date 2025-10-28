@@ -1,11 +1,12 @@
 import MemberWorkspace from "../models/MemberWorkspace.model.js";
 
 class MemberWorkspaceRepository {
+
     static async create(user_id, workspace_id, role) {
         try {
             await MemberWorkspace.insertOne({
                 id_user: user_id,
-                id_workspace : workspace_id,
+                id_workspace: workspace_id,
                 role: role
             })
         }
@@ -78,8 +79,10 @@ class MemberWorkspaceRepository {
         return members_list_formatted
     }
 
-    
+    static async getByUserIdAndWorkspaceId(user_id, workspace_id){
+        const member = await MemberWorkspace.findOne({id_user: user_id, id_workspace: workspace_id})
+        return member
+    }
 }
-
 
 export default MemberWorkspaceRepository
