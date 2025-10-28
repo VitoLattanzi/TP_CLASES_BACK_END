@@ -9,8 +9,6 @@ class WorkspaceService {
     } 
     static async create (user_id, name, url_img){
 
-        console.log(user_id, name, url_img)
-
         //crear el espacio de trabajo
         const workspace_created = await WorkspaceRepository.create(name, url_img)
 
