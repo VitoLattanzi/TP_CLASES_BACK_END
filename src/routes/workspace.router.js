@@ -1,9 +1,9 @@
-
 import express from 'express'
-import WorkspaceRepository from '../repositories/workspace.repository.js'
-import WorkspaceController from '../controllers/workspace.controller.js'
-import authMiddleware from '../middlewares/authMiddleware.js'
-import workspaceMiddleware from '../middlewares/workspaceMiddelware.js'
+import WorkspaceController from "../controllers/workspace.controller.js"
+import ChannelController from "../controllers/channel.controller.js"
+import MemberController from "../controllers/member.controller.js"
+import authMiddleware from "../middlewares/authMiddleware.js"
+import workspaceMiddleware from "../middlewares/workspaceMiddelware.js"
 
 const workspaceRouter = express.Router()
 
@@ -28,11 +28,30 @@ workspaceRouter.post(
     authMiddleware,
     WorkspaceController.create
 )
+//POST /workspaces/:workspace_id/channels
+/* 
+body: {
+    name
+}
+    -crear nuevo canalr
+*/
+workspaceRouter.post(
+    '/:workspace_id/channels',
+    authMiddleware,
+    workspaceMiddleware(["admin"]), 
+    ChannelController.create
+)
+
+
+
+
 // Get /Workspace/:workspace_id
 /* 
 -obtener los detalles de un espacio de trabajo
 -cargar la lista de canales de un workspace
 */
+
+
 workspaceRouter.get(
     '/:workspace_id',
     authMiddleware,

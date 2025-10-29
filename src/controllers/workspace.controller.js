@@ -1,22 +1,18 @@
+
 import ENVIRONMENT from "../config/environment.config.js"
 import mailTransporter from "../config/mailTransporter.config.js"
 import { ServerError } from "../error.js"
+import ChannelRepository from "../repositories/channel.repository.js"
 import MemberWorkspaceRepository from "../repositories/memberWorkspace.repository.js"
 import UserRepository from "../repositories/user.repository.js"
 import WorkspaceRepository from "../repositories/workspace.repository.js"
 import WorkspaceService from "../services/workspace.service.js"
 import jwt from 'jsonwebtoken'
 
-
 class WorkspaceController {
-/*************  ✨ Windsurf Command ⭐  *************/
-    /**
-     * Obtener la lista de espacios de trabajo del usuario que se encuentra en sesion
-     * @param {Request} request - objeto que contiene la informacion de la peticion HTTP
-     * @param {Response} response - objeto que se utiliza para enviar la respuesta HTTP
-     * @throws {ServerError} - si ocurre un error interno del servidor, se lanza un objeto con la informacion del error
-     */
-/*******  a034a695-8928-4606-8ba6-71842181ed54  *******/    static async getAll (request, response){
+
+    
+    static async getAll (request, response){
         try{
             //Muestro los datos de sesion del usuario
             const user = request.user
@@ -151,10 +147,25 @@ class WorkspaceController {
         }
     }
 
-    static async getById(){
+    static async getById (request, response){
         try{
+            const {workspace_selected, member, user} = request
+
+            const channels = await ChannelRepository.getAllByWorkspaceId(workspace_selected._id)
+
+            response.json(
+                {
+                    ok:true, 
+                    status: 200,
+                    message: 'Espacio de trabajo obtenido',
+                    data: {
+                        workspace_detail: workspace_selected,
+                        channels: channels
+                    }
+                }
+            )
         }
-        catch(error){
+         catch(error){
             if(error.status){
                 return response.status(error.status).json({
                     ok:false,

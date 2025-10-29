@@ -24,10 +24,10 @@ class ChannelRepository {
             throw error
         }
     }
-    static async getById(channel_id) {
+    static async getAllByWorkspaceId(workspace_id) {
         try {
-            const found_channel = await Channel.findById(channel_id)
-            return found_channel
+            const found_channels = await Channel.find({id_workspace: workspace_id})
+            return found_channels
         }
         catch (error) {
             console.error(error)
