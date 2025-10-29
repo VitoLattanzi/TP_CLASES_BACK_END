@@ -1,11 +1,22 @@
+import ENVIRONMENT from "../config/environment.config.js"
+import mailTransporter from "../config/mailTransporter.config.js"
+import { ServerError } from "../error.js"
 import MemberWorkspaceRepository from "../repositories/memberWorkspace.repository.js"
+import UserRepository from "../repositories/user.repository.js"
 import WorkspaceRepository from "../repositories/workspace.repository.js"
 import WorkspaceService from "../services/workspace.service.js"
-import UserRepository from "../repositories/user.repository.js"
+import jwt from 'jsonwebtoken'
 
 
 class WorkspaceController {
-    static async getAll (request, response){
+/*************  ✨ Windsurf Command ⭐  *************/
+    /**
+     * Obtener la lista de espacios de trabajo del usuario que se encuentra en sesion
+     * @param {Request} request - objeto que contiene la informacion de la peticion HTTP
+     * @param {Response} response - objeto que se utiliza para enviar la respuesta HTTP
+     * @throws {ServerError} - si ocurre un error interno del servidor, se lanza un objeto con la informacion del error
+     */
+/*******  a034a695-8928-4606-8ba6-71842181ed54  *******/    static async getAll (request, response){
         try{
             //Muestro los datos de sesion del usuario
             const user = request.user
@@ -88,10 +99,13 @@ class WorkspaceController {
         try{
             const {member, workspace_selected, user} = request
             const {email_invited, role_invited} = request.body
-
-            const user_invited = await UserRepository.getByEmail(email_invited)
-            const alredy_member = await MemberWorkspaceRepository.getByUserIdAndWorkspaceId()
-
+           
+            await WorkspaceService.invite(member, workspace_selected, email_invited, role_invited)
+            response.json({
+                status: 200,
+                message: 'Invitacion enviada',
+                ok: true
+            })
             /* 
                 - Verificar que exista un usuario (EN LA DB) con el email_invited
                     Por?: Hay que checkear que el usuario invitado existe
@@ -127,6 +141,30 @@ class WorkspaceController {
             else{
                 console.error(
                     'ERROR AL invitar', error
+                )
+                return response.status(500).json({
+                    ok: false,
+                    message: 'Error interno del servidor',
+                    status: 500
+                })
+            }
+        }
+    }
+
+    static async getById(){
+        try{
+        }
+        catch(error){
+            if(error.status){
+                return response.status(error.status).json({
+                    ok:false,
+                    message: error.message,
+                    status: error.status
+                })
+            }
+            else{
+                console.error(
+                    'ERROR AL obtener detalles del workspace', error
                 )
                 return response.status(500).json({
                     ok: false,
